@@ -11,7 +11,7 @@ export class AppService {
   }
 
   GetCar(car_id:number): string {
-    return 'Car!';
+    return `${car_id} Car!`;
   }
 
   CreatePhoto(): string{

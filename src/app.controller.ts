@@ -1,7 +1,7 @@
 import { Controller, Get, Post, Param } from '@nestjs/common';
 import { AppService } from './app.service';
 
-@Controller()
+@Controller('app') // 'app' prefix to all routes inside this controller.
 export class AppController {
   constructor(private readonly appService: AppService) {}
 
@@ -20,7 +20,7 @@ export class AppController {
     return this.appService.GetCar(car_id);
   }
 
-  @Post('/picture')
+  @Post('picture')
   CreatePhoto(): string {
   return this.appService.CreatePhoto();
   }
