@@ -1,34 +1,25 @@
-import { Body, Controller , Get,Post,Query, UsePipes, ValidationPipe,UseInterceptors,UploadedFile} from "@nestjs/common";
-import { StudentService } from "./student.service";
-import { StudetDTO } from "./StudentDTO";
+import { Body, Controller ,Get,Post,Query, UsePipes, ValidationPipe,UseInterceptors,UploadedFile} from "@nestjs/common";
+import { CustomerService } from "./customer.service";
+import { CustomerDTO } from "./DTO/customerDTO";
 import { FileInterceptor } from "@nestjs/platform-express";
 import { MulterError,diskStorage } from "multer";
 
-@Controller('student') //'student' prefix to all routes inside this controller.
-export class StudentController{
-constructor(private readonly student_objService : StudentService){}
+//'Customer' prefix to all routes inside this controller.
+@Controller('Customer') 
+export class CustomerController{
+constructor(private readonly customer_objService : CustomerService){}
 
-@Get('index')
+@Get('profile')
 func1(): string{
-return this.student_objService.func1();
+return this.customer_objService.func1();
 }
 
-//any
-@Get('search')
-searchStudent(
-@Query('name') namee: string,
-@Query('age') agee: number,
-) :any {
-return this.student_objService.searchStudent(namee,agee);
-}
 
-// Object pass (DTO)
-@Post('object')
+// Create Customer // [data(Customer Type) pass DTO --> service]
+@Post('create-customer')
 @UsePipes(new ValidationPipe())
-objectDTO(@Body() data:StudetDTO): StudetDTO{
-
-console.log(data)
-return this.student_objService.objectDTO(data);
+C_CreateCustomer(@Body() dto_data:CustomerDTO):any{
+    return this.customer_objService.CreateCustomer(dto_data);
 }
     
 

@@ -1,6 +1,5 @@
 import { ValidationArguments,ValidatorConstraint,ValidatorConstraintInterface,ValidatorOptions,registerDecorator} from "class-validator";
 
-
 //If you have custom validation logic you can create a Constraint class:
 //Custom validation classes
 @ValidatorConstraint({name:'CustomerName'})
