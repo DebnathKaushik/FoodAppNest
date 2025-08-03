@@ -7,19 +7,19 @@ import { MulterError,diskStorage } from "multer";
 //'Customer' prefix to all routes inside this controller.
 @Controller('Customer') 
 export class CustomerController{
-constructor(private readonly customer_objService : CustomerService){}
+constructor(private readonly customerService : CustomerService){}
 
 @Get('profile')
 func1(): string{
-return this.customer_objService.func1();
+return this.customerService.func1();
 }
 
 
-// Create Customer // [data(Customer Type) pass DTO --> service]
+// Create Customer // [dto_data(CustomerDTO as like Customer Entity Type) pass "DTO" through --> "service"]
 @Post('create-customer')
 @UsePipes(new ValidationPipe())
 C_CreateCustomer(@Body() dto_data:CustomerDTO):any{
-    return this.customer_objService.CreateCustomer(dto_data);
+    return this.customerService.CreateCustomer(dto_data);
 }
     
 

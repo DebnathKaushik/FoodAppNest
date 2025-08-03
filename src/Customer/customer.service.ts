@@ -34,7 +34,7 @@ if(exists_customer){
     customer.password = dto_data.password;
     customer.phone = dto_data.phone;
     console.log(customer);
-    return this.CustomerRepository.save(customer);  // create a customer or save in db.
+    return this.CustomerRepository.save(customer);  // create a customer or insert in db.
     }
 }
 
