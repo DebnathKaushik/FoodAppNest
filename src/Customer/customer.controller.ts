@@ -1,8 +1,10 @@
-import { Body, Controller ,Get,Post,Query, UsePipes, ValidationPipe,UseInterceptors,UploadedFile} from "@nestjs/common";
+import { Body, Controller,Param ,Get,Post,Query, UsePipes, ValidationPipe,UseInterceptors,UploadedFile, Patch, Delete} from "@nestjs/common";
 import { CustomerService } from "./customer.service";
-import { CustomerDTO } from "./DTO/customerDTO";
+import { CustomerDTO } from "./DTOs/customerDTO";
 import { FileInterceptor } from "@nestjs/platform-express";
 import { MulterError,diskStorage } from "multer";
+
+
 
 //'Customer' prefix to all routes inside this controller.
 @Controller('Customer') 
@@ -15,13 +17,16 @@ return this.customerService.func1();
 }
 
 
-// Create Customer // [dto_data(CustomerDTO as like Customer Entity Type) pass "DTO" through --> "service"]
+//Create Customer // [dto_data(CustomerDTO as like Customer Entity Type) pass "DTO" through --> "service"]
 @Post('create-customer')
 @UsePipes(new ValidationPipe())
 C_CreateCustomer(@Body() dto_data:CustomerDTO):any{
     return this.customerService.CreateCustomer(dto_data);
 }
     
+
+
+
 
 // For file uploads
 @Post('uploads')
@@ -46,3 +51,4 @@ console.log(file);
 }
 
 }
+
