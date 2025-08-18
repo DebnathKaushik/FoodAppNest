@@ -5,14 +5,14 @@ import { CustomerModule } from './Customer/customer.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { RestaurantModule } from './Restaurants/restaurant.module';
 import { ProductModule } from './Products/product.module';
-import { AuthModule } from './Auth/Restaurant.Auth/auth.module';
+import {  RestaurantAuthModule } from './Auth/Restaurant.Auth/auth.module';
 import * as dotenv from 'dotenv';
 dotenv.config();
 
 
 
 @Module({
-  imports: [CustomerModule,RestaurantModule,ProductModule,AuthModule,TypeOrmModule.forRoot(
+  imports: [CustomerModule,RestaurantModule,ProductModule,RestaurantAuthModule,TypeOrmModule.forRoot(
     {
       type:'postgres',
       host:process.env.DB_HOST,

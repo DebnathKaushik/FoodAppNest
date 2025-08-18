@@ -6,6 +6,7 @@ import { AuthService } from './auth.service';
 export class JwtAuthGuard implements CanActivate {
   constructor(private authService: AuthService) {}
 
+  // override this canActive function
   async canActivate(context: ExecutionContext): Promise<boolean> {
     const request = context.switchToHttp().getRequest();
     const authHeader = request.headers['authorization'];
