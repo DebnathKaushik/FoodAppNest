@@ -1,4 +1,4 @@
-import { Body, Controller, Delete, Get, Param, ParseIntPipe, Patch, Post, Put, UseGuards, UsePipes, ValidationPipe } from "@nestjs/common";
+import { Body, Controller, Delete, Get, HttpException, HttpStatus, Param, ParseIntPipe, Patch, Post, Put, UseGuards, UsePipes, ValidationPipe } from "@nestjs/common";
 import { RestaurantService } from "./restaurant.service";
 import { RestaurantDto } from "./DTOs/restaurant.dto";
 import { ProductDto } from "src/Products/DTOs/Product.dto";
@@ -12,8 +12,13 @@ export class RestaurantController{
     // Get All Restaurant
     @Get('all-restaurant')
     Get_all_Restaurant(){
-        return this.restaurantService.Get_all_Restaurant()
-    } 
+        try{
+            return this.restaurantService.Get_all_Restaurant()
+        } 
+        catch(error){
+            throw new HttpException('Forbidden', HttpStatus.FORBIDDEN);
+        }
+    }
 
     // Get Specific Restaurant
     @Get(':id')

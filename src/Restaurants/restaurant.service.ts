@@ -18,11 +18,7 @@ export class RestaurantService{
 
 // Get all restaurant-------------------------------------------
     Get_all_Restaurant():Promise<Restaurant[]>{
-        try{
-            return this.RestaurantRepo.find()
-        }catch(error){
-            throw new HttpException('Forbidden', HttpStatus.FORBIDDEN);
-        }
+        return this.RestaurantRepo.find()
     }
 
 // Get Specific restaurant(id)----------------------------------------
@@ -32,7 +28,7 @@ export class RestaurantService{
     });
 
     if (!restaurant) {
-       throw new HttpException('Invalid data', HttpStatus.BAD_REQUEST);
+       throw new HttpException('Restaurant id Not found', HttpStatus.NOT_FOUND);
     }
 
     return restaurant;

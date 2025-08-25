@@ -21,11 +21,11 @@ export class AuthService{
             where:{email}
         })
         if(!exist_seller){
-            if (!exist_seller) throw new UnauthorizedException('Invalid credentials');
+             throw new UnauthorizedException('Invalid credentials');
         }
         const pass_check = await bcrypt.compare(password,exist_seller.password)
         if(!pass_check){
-            if (!pass_check) throw new UnauthorizedException('Invalid credentials');
+             throw new UnauthorizedException('Invalid credentials');
         }
         const payload = {id:exist_seller.id, email:exist_seller.email}
         const token =  this.jwtservice.sign(payload)

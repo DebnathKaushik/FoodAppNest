@@ -12,7 +12,8 @@ dotenv.config();
 
 
 @Module({
-  imports: [CustomerModule,RestaurantModule,ProductModule,RestaurantAuthModule,TypeOrmModule.forRoot(
+  imports: [CustomerModule,RestaurantModule,ProductModule,RestaurantAuthModule,
+    TypeOrmModule.forRoot(
     {
       type:'postgres',
       host:process.env.DB_HOST,
@@ -22,7 +23,7 @@ dotenv.config();
       database:process.env.DATABASE,
       autoLoadEntities:true,
       synchronize:true,
-    })
+    }),
   ],
   controllers: [AppController],
   providers: [AppService],
