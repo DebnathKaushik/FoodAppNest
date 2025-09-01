@@ -6,7 +6,9 @@ export default function users({params,}:
     const {id} = use(params)
     return(
         <>
-            <p>User {id} </p>
+            <p>This is User {id} Details </p>
+            <h2>Name: Kaushik Debnath</h2>
+            <h2>Email: kaushik123@gmail.com</h2>
         </>
     )
 

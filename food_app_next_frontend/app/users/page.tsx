@@ -3,7 +3,10 @@ import Link from "next/link";
 export default function Showalluser(){
     return(
         <>
-        <Link href="users/1">user 1</Link>
+
+        <p> All Registered User </p>
+        <br></br>
+        <Link href="users/1" >user 1</Link>
         <br></br>
         <Link href="users/2">user 2</Link>
         <br></br>

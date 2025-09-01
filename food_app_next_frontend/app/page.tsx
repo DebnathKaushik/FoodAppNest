@@ -4,12 +4,24 @@ import Image from "next/image";
 export default function Home() {
   return (
     <>
-    <h1>Hello</h1>
-    <h5>Main page</h5>
+     
+     <Link href="/login" >
+          Get Started
+      </Link>
 
-    <Link href="about">About page</Link>
-    <Image src="/bus.avif" alt="Bus" width={400} height={100}></Image>
+      <h1 className="text-4xl">Food App</h1>
+        
+      <Link href="/about" className="mb-6 ">
+        About Page
+      </Link>
+
+      <Image
+        src="/foodimage.avif"
+        alt="food image"
+        width={800}
+        height={400}
+        className="rounded-lg shadow-lg"
+      />
     </>
-    
   );
 }
