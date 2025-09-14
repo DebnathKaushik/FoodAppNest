@@ -43,7 +43,7 @@ export default function RegisterPage() {
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
-  e.preventDefault();
+  e.preventDefault(); // it blocks defaults Submit (Reload that page) so below code can fetch or call backend and do stuff
   try {
     // Validate form first
     registerSchema.parse(formData);
