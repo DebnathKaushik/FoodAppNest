@@ -40,5 +40,4 @@ export class Order {
   // OrderDetails relation
   @OneToMany(() => OrderDetails, (orderDetails) => orderDetails.order, { cascade: true })
   orderDetails: OrderDetails[];
-
 }
