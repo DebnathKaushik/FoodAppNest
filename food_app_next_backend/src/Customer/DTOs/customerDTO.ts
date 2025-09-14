@@ -8,7 +8,7 @@ export class CustomerDTO{
 
     //Custom validator
     @CustomerName()  
-    name:string;
+    customer_name:string;
 
     // Custom validator
     @ISEmail()      
@@ -22,5 +22,8 @@ export class CustomerDTO{
     @Matches(/^01\d{9}$/,{message: 'phone number must have 01 first and 11 digits'}) 
     @IsString()
     phone:string;
+
+    @IsString()
+    address:string;
 
 } 

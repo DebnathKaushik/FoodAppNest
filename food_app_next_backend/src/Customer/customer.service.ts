@@ -1,46 +1,70 @@
-import { Injectable } from "@nestjs/common";
-import { CustomerDTO } from "./DTOs/customerDTO";
+import { ConflictException, Injectable, NotFoundException } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { Customer } from "./Entities/Customer.entity";
-import { IsNull, Repository } from "typeorm";
-import { ConflictException } from '@nestjs/common';
-
+import { Repository } from "typeorm";
+import { CustomerDTO } from "./DTOs/customerDTO";
+import * as bcrypt from 'bcrypt' 
+import { json } from "stream/consumers";
 
 @Injectable()
 export class CustomerService{
-//declares a private variable (CustomerRepository) that holds this repository of (Customer) Type.
-  constructor(@InjectRepository(Customer) private CustomerRepository:Repository<Customer>){} 
+    constructor(@InjectRepository(Customer) private customerRepo:Repository<Customer>){}
 
 
-  func1():string{
-      return "Hello Customer Profile";
-  }
+    // Create/ Sign up customer ------------------------------------------
+    async CreateCustomer(dto_data:CustomerDTO):Promise<Customer>{
+        const salt =  await bcrypt.genSalt();
+        const hashedPassword = await bcrypt.hash(dto_data.password,salt)
 
-
-  async CreateCustomer(dto_data:CustomerDTO):Promise<Customer>{
-  //check this Customer exists or not in db.
-  const exists_customer = await this.CustomerRepository.findOne({
-      where:[
-          {name:dto_data.name},
-          {email:dto_data.email}
-      ]
-  })   
-  if(exists_customer){
-      console.log("Customer name or Email are taken");
-      throw new ConflictException("Customer Name or Email are taken")
-  }else{
-      const customer = new Customer();
-      customer.name = dto_data.name;
-      customer.email = dto_data.email;
-      customer.password = dto_data.password;
-      customer.phone = dto_data.phone;
-      console.log(customer);
-      return this.CustomerRepository.save(customer);  // create a customer or insert in db.
-      }
-  }
-
-
-
-
-
-}   
+    // check Customer exist or not  
+    const exists_customer = await this.customerRepo.findOne({
+            where:[
+                {customer_name:dto_data.customer_name},
+                {email:dto_data.email}
+            ]
+        })   
+        if(exists_customer){
+            console.log("restaurant name or Email are taken");
+            throw new ConflictException("restaurant Name or Email are taken")
+        }else{
+        // create a Customer object then save into DB
+            const restaurant = this.customerRepo.create({
+            ...dto_data,
+            password:hashedPassword,
+            })
+            return await this.customerRepo.save(restaurant)
+        }
+    }
+    
+    // Customer Update-------------------------------------
+        async update_Customer(id:number,dto_data:CustomerDTO):Promise<Customer>{
+            const customer = await this.customerRepo.findOne({
+                where:{ id }
+            })
+            if(!customer){
+               throw new NotFoundException(`Customer with ID ${id} not found`);
+            }
+            // create again hash otherwise it updated with plain dto password
+            const salt =  await bcrypt.genSalt()
+            const hashedPassword = await bcrypt.hash(dto_data.password,salt)
+            customer.password = hashedPassword
+    
+            const {password, ...otherfields} = dto_data
+            // here do not pass dto password Which is plain string
+            const updated_customer =  Object.assign(customer,otherfields) 
+            return await this.customerRepo.save(updated_customer)
+        }
+    
+        
+    // Customer Delete-------------------------------------
+        async delete_Customer(id:number):Promise<any>{
+            const customer = await this.customerRepo.findOne({
+            where:{id}
+        })
+        if(!customer){
+            throw new NotFoundException(`Restaurant with ID ${id} not found`);
+        }
+         
+            return await this.customerRepo.remove(customer);
+        }
+}

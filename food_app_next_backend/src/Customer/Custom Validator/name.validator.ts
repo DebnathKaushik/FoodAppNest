@@ -5,12 +5,11 @@ import {
 @ValidatorConstraint({ name: 'CustomerName' })
 export class CustomerNameConstraint implements ValidatorConstraintInterface {
   validate(value: any, args: ValidationArguments): boolean {
-    const regex = /^[a-zA-Z\s\.-]+$/; // Only letters, spaces, dots, hyphens
-    return typeof value === 'string' && regex.test(value);
+    return typeof value === 'string' 
   }
 
   defaultMessage(args: ValidationArguments) {
-    return 'Customer name must contain only letters, spaces, dots, or hyphens.';
+    return 'Customer name must have String' ;
   }
 }
 

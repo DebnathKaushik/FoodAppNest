@@ -1,3 +1,4 @@
+import { Order } from "src/Order/Entities/order.entity";
 import { Product } from "src/Products/Entities/Product.entity";
 import { Entity,PrimaryGeneratedColumn,Column, OneToMany } from "typeorm";
 
@@ -24,7 +25,11 @@ export class Restaurant{
     address:string;
     @Column()
     city:string
+
     @OneToMany(()=>Product, product => product.restaurant,{cascade:true})
     products:Product[]
+    @OneToMany(()=>Order, (order) =>order.restaurant, {cascade:true})
+    orders:Order[];
+
 
 }

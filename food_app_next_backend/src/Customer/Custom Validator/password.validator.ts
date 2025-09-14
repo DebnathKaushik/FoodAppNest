@@ -6,7 +6,7 @@ export class PasswordConstraint implements ValidatorConstraintInterface{
     validate(value: string, args: ValidationArguments): boolean {
         const passLength = value.length;
         const regex = /[a-z]/;
-        return value != null && passLength >= 6 && regex.test(value)
+        return value != null && passLength >= 4 && regex.test(value)
     }
     defaultMessage(args: ValidationArguments) {
     //error message if validation failed

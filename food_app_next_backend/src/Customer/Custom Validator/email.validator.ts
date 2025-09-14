@@ -7,12 +7,12 @@ export class EmailConstranint implements ValidatorConstraintInterface{
         if(email === null ){
             return false;
         }else{
-            return typeof email === 'string' && email.includes("aiub.edu") ;  // includes check (aiub.edu) if true else false
+            return typeof email === 'string' && email.includes(".com") ;  // includes check (aiub.edu) if true else false
         }
     }
     defaultMessage(args: ValidationArguments) {
     //error message if validation failed
-     return `Email is required and must have 'aiub.edu' domain` ;
+     return `Email is required and must have '.com' ` ;
   }
 }
 
