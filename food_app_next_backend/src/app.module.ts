@@ -7,14 +7,16 @@ import { RestaurantModule } from './Restaurants/restaurant.module';
 import { ProductModule } from './Products/product.module';
 import {  RestaurantAuthModule } from './Auth/Restaurant.Auth/auth.module';
 import { OrderModule } from './Order/order.module';
+import { CustomerAuthModule } from './Auth/Customer.Auth/auth.module';
 
 import * as dotenv from 'dotenv';
+
 dotenv.config();
 
 
 
 @Module({
-  imports: [CustomerModule,RestaurantModule,ProductModule,OrderModule,RestaurantAuthModule,
+  imports: [CustomerModule,RestaurantModule,ProductModule,OrderModule,RestaurantAuthModule,CustomerAuthModule,
     TypeOrmModule.forRoot(
     {
       type:'postgres',
