@@ -1,4 +1,4 @@
-import { Injectable, NotFoundException, BadRequestException } from '@nestjs/common';
+import { Injectable, NotFoundException, BadRequestException, ForbiddenException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { In, Repository } from 'typeorm';
 import { Order, OrderStatus } from './Entities/order.entity';
@@ -16,7 +16,8 @@ export class OrderService {
     @InjectRepository(Customer) private customerRepo: Repository<Customer>,
   ) {}
 
-  // Order Create
+
+  // Customer Order Create
   async createOrder(customerId: number, dto: CreateOrderDto) {
     const customer = await this.customerRepo.findOne({ where: { id: customerId } });
     if (!customer) throw new NotFoundException('Customer not found');
@@ -123,6 +124,39 @@ export class OrderService {
 
 }
 
+
+// Restaurant update status
+
+async updateStatus(order_id:number,status:OrderStatus,restaurant_id:number):Promise<any>{
+  const exist_order = await this.orderRepo.findOne({
+    where:{id:order_id},
+    relations:['restaurant'],
+  })
+  if(!exist_order){
+    throw new NotFoundException('Order not found');
+  }
+  if(exist_order.restaurant.id !== restaurant_id){
+    throw new ForbiddenException('You are not allowed to update this order');
+  }
+
+  exist_order.status = status;
+  await this.orderRepo.save(exist_order)
+  return {
+    message: `Order status updated to ${status}`,
+    order_id: exist_order.id,
+    status: exist_order.status,
+  };
+
+}
+
+
+
+
+
+
+
+
+
 //   async getOrdersByCustomer(customerId: number) {
 //     return this.orderRepo.find({
 //       where: { customer: { id: customerId } },
@@ -138,4 +172,6 @@ export class OrderService {
 //     if (!order) throw new NotFoundException('Order not found');
 //     return order;
 //   }
+
+
 }

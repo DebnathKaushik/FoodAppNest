@@ -8,9 +8,10 @@ import { OrderService } from "./order.service";
 import { OrderController } from "./order.controller";
 import { CustomerAuthModule } from "src/Auth/Customer.Auth/auth.module";
 import { JwtAuthGuard } from "src/Auth/Customer.Auth/jwt.guard";
+import { RestaurantAuthModule } from "src/Auth/Restaurant.Auth/auth.module";
 
 @Module({
-    imports:[TypeOrmModule.forFeature([Order,OrderDetails,Product,Customer]),CustomerAuthModule],
+    imports:[TypeOrmModule.forFeature([Order,OrderDetails,Product,Customer]),CustomerAuthModule,RestaurantAuthModule],
     controllers:[OrderController],
     providers:[OrderService,JwtAuthGuard],
 })
