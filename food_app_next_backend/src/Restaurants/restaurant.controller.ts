@@ -1,8 +1,9 @@
-import { Body, Controller, Delete, Get, HttpException, HttpStatus, Param, ParseIntPipe, Patch, Post, Put, UseGuards, UsePipes, ValidationPipe } from "@nestjs/common";
+import { Body, Controller, Delete, Get, HttpException, HttpStatus,Request, Param, ParseIntPipe, Patch, Post, Put, UseGuards, UsePipes, ValidationPipe, ForbiddenException } from "@nestjs/common";
 import { RestaurantService } from "./restaurant.service";
 import { RestaurantDto } from "./DTOs/restaurant.dto";
 import { ProductDto } from "src/Products/DTOs/Product.dto";
 import { JwtAuthGuard } from "src/Auth/Restaurant.Auth/jwt.guard";
+
 
 
 @Controller("Restaurant")
@@ -51,7 +52,14 @@ export class RestaurantController{
     // Restaurant Delete
     @Delete('delete/:id')
     @UseGuards(JwtAuthGuard)
-    delete_restaurant(@Param('id',ParseIntPipe) id:number):any{
+    delete_restaurant(@Param('id',ParseIntPipe) id:number, @Request() req):any{
+
+        const resIdFromToken = req.user.id;
+
+        if(resIdFromToken !== id){
+            throw new ForbiddenException("You are not allowed to delete this restaurant");
+        }
+
         return this.restaurantService.delete_restaurant(id)
     }
     

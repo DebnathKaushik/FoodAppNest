@@ -3,15 +3,35 @@ import Image from "next/image";
 
 export default function Home() {
   return (
-    <div className=" bg-gradient-to-r from-green-200 to-blue-300 flex flex-col items-center justify-center min-h-screen bg-gray-100 p-4 space-y-6">
+    <div className=" bg-gradient-to-r from-blue-200 to-green-400 flex flex-col items-center justify-center min-h-screen bg-gray-100 p-4 space-y-6">
 
-      <h1 className="text-4xl font-bold text-center">Food App</h1>
+      <h1 className="text-yellow-600 italic text-4xl font-bold text-center">Eat Healthy Stay Healthy</h1>
+
+      <Link href={"/"}>
+        <div className=" absolute top-4 left-4">
+          <Image
+            src="/logo k.jpg"
+            alt="food logo"
+            width={60}
+            height={40}
+            className="rounded-lg shadow-lg mx-auto"
+          />
+        </div>
+      </Link>
+      
 
       <Link
-        href="/login"
-        className="bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700 transition"
+        href="/auth/customer-login"
+        className=" absolute top-6 right-60 bg-red-800 text-white px-6 py-2 rounded-lg hover:bg-red-900 transition"
       >
-        Get Started
+        Get Started Customer
+      </Link>
+
+      <Link
+        href="/auth/restaurant-login"
+        className="absolute top-6 right-6 bg-green-600 text-white px-6 py-2 rounded-lg hover:bg-green-700 transition"
+      >
+        Get Started Restaurant
       </Link>
 
       <div className="w-full max-w-xl">
@@ -24,12 +44,6 @@ export default function Home() {
         />
       </div>
 
-      <Link
-        href="/about"
-        className="text-blue-600 hover:underline"
-      >
-        About Page
-      </Link>
     </div>
   );
 }
