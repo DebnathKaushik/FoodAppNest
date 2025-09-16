@@ -13,7 +13,7 @@ export class RestaurantDto {
   email: string;
 
   @IsString()
-  @MinLength(6)
+  @MinLength(4)
   password: string;
 
   @IsString()

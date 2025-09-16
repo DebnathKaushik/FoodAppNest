@@ -37,6 +37,11 @@ export default function CustomerSignup() {
     address: "",
   });
 
+   // show and hide password 
+  const [showPassword, setShowPassword] = useState(false);
+
+
+
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
@@ -60,7 +65,7 @@ export default function CustomerSignup() {
 
       // redirect after the user closes the popup
       router.push("/auth/customer-login"); 
-      
+
     } catch (err: any) {
       if (err instanceof z.ZodError) {
         const messages = err.issues.map((issue) => issue.message).join("<br/>");
@@ -90,7 +95,7 @@ export default function CustomerSignup() {
   return (
     <div className="bg-gradient-to-r from-blue-300 to-green-300 flex items-center justify-center min-h-screen">
       <div className="bg-white/30 p-8 rounded-3xl shadow-lg w-full max-w-md">
-        <h2 className="text-2xl font-bold mb-6 text-center">Customer Signup</h2>
+        <h2 className="text-2xl font-bold mb-6 text-center">Be a Happy Customer/ Sign up</h2>
 
         <form onSubmit={handleSubmit} className="space-y-4">
           <input
@@ -99,7 +104,7 @@ export default function CustomerSignup() {
             placeholder="Name"
             value={formData.customer_name}
             onChange={handleChange}
-            className="w-full border-2 p-2 rounded"
+            className="w-full border p-2 rounded"
           />
           <input
             type="email"
@@ -107,23 +112,31 @@ export default function CustomerSignup() {
             placeholder="Email"
             value={formData.email}
             onChange={handleChange}
-            className="w-full border-2 p-2 rounded"
+            className="w-full border p-2 rounded"
           />
-          <input
-            type="password"
-            name="password"
-            placeholder="Password"
-            value={formData.password}
-            onChange={handleChange}
-            className="w-full border-2 p-2 rounded"
-          />
+            <div className="relative w-full">
+                <input
+                    type={showPassword ? "text" : "password"} // toggle type
+                    name="password"
+                    placeholder="Password"
+                    value={formData.password}
+                    onChange={handleChange}
+                    className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
+                />
+                {/* Eye icon button */}
+                <button
+                    type="button" onClick={() => setShowPassword(!showPassword)} className="absolute right-2 top-1/2 transform -translate-y-1/2 text-gray-500">
+                    {showPassword ? "🔒" : "👁️"}
+                </button>
+            </div>
+
           <input
             type="text"
             name="phone"
             placeholder="Phone"
             value={formData.phone}
             onChange={handleChange}
-            className="w-full border-2 p-2 rounded"
+            className="w-full border p-2 rounded"
           />
           <input
             type="text"
@@ -131,18 +144,18 @@ export default function CustomerSignup() {
             placeholder="Address"
             value={formData.address}
             onChange={handleChange}
-            className="w-full border-2 p-2 rounded"
+            className="w-full border p-2 rounded"
           />
           <button
             type="submit"
-            className="mx-auto block border-2 border-black bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700"
+            className="w-full bg-green-600 text-white py-2 rounded-lg hover:bg-green-700 transition"
           >
             Register
           </button>
         </form>
         <div className="mt-6 text-center">
           Already have an account?{" "}
-          <Link href="/auth/customer-login" className="text-blue-600 hover:underline">
+          <Link href="/auth/customer-login" className="text-green-700 hover:underline">
             Login
           </Link>
         </div>

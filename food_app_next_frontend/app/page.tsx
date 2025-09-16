@@ -18,22 +18,6 @@ export default function Home() {
           />
           <span className="font-bold text-xl text-yellow-400">FoodApp</span>
         </Link>
-
-        {/* Right: Links */}
-        <div className="flex space-x-2">
-          <Link
-            href="/auth/customer-login"
-            className="bg-stone-700 hover:bg-blue-800 px-4 py-2 rounded-lg transition"
-          >
-            Customer
-          </Link>
-          <Link
-            href="/auth/restaurant-login"
-            className="bg-stone-700 hover:bg-blue-700 px-4 py-2 rounded-lg transition"
-          >
-            Restaurant
-          </Link>
-        </div>
       </nav>
 
       {/* Main Content */}
@@ -67,12 +51,25 @@ export default function Home() {
             alt="food image 3"
             width={400}
             height={300}
-            className="rounded-lg shadow-lg w-full h-auto  flex-[0.9]"
+            className="rounded-lg shadow-lg w-full h-auto flex-[0.9]"
           />
         </div>
 
-
-
+        {/* Customer & Restaurant Links below main content */}
+        <div className="flex space-x-4 mt-2">
+          <Link
+            href="/auth/customer-login"
+            className="bg-green-700 hover:bg-green-800 px-6 py-3 rounded-lg text-white font-semibold transition transform hover:scale-105"
+          >
+            Get started with Customer
+          </Link>
+          <Link
+            href="/auth/restaurant-login"
+            className="bg-blue-700 hover:bg-blue-800 px-6 py-3 rounded-lg text-white font-semibold transition transform hover:scale-105"
+          >
+            Get started with Restaurant
+          </Link>
+        </div>
       </main>
     </div>
   );

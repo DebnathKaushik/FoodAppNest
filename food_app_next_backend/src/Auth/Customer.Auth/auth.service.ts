@@ -27,10 +27,9 @@ export class AuthService{
         if(!pass_check){
              throw new UnauthorizedException('Invalid credentials');
         }
-        const payload = {id:exist_customer.id, email:exist_customer.email}
+        const payload = {id:exist_customer.id, email:exist_customer.email, name:exist_customer.customer_name};
         const token =  this.jwtservice.sign(payload)
-
-        return {access_token:token}
+        return {token,user:{id:exist_customer.id, email:exist_customer.email, name:exist_customer.customer_name}}
     }
 
     async verify_token(token: string) {

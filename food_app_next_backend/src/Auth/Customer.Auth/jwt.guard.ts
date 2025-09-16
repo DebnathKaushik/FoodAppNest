@@ -7,21 +7,31 @@ export class JwtAuthGuard implements CanActivate {
   constructor(private authService: AuthService) {}
 
   // override this canActive function
-  async canActivate(context: ExecutionContext): Promise<boolean> {
+    async canActivate(context: ExecutionContext): Promise<boolean> {
     const request = context.switchToHttp().getRequest();
-    const authHeader = request.headers['authorization'];
+    
+    // Try cookie first
+    let token = request.cookies?.jwt_Customer;
 
-    if (!authHeader){
-        throw new UnauthorizedException('No token provided')
+    // Fallback: check Bearer header
+    if (!token && request.headers['authorization']) {
+      const authHeader = request.headers['authorization'];
+      if (authHeader.startsWith('Bearer ')) {
+        token = authHeader.split(' ')[1];
+      }
     }
 
-    const token = authHeader.split(' ')[1]; 
+    if (!token) {
+      throw new UnauthorizedException('No token provided');
+    }
+
     try {
       const decoded = await this.authService.verify_token(token);
-      request.user = decoded; 
+      request.user = decoded;
       return true;
-    } catch (err) {
+    } catch {
       throw new UnauthorizedException('Invalid or expired token');
     }
   }
+
 }

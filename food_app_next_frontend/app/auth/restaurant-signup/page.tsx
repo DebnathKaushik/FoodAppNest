@@ -36,6 +36,10 @@ export default function RestaurantSignup() {
     city: "",
   });
 
+   // show and hide password 
+  const [showPassword, setShowPassword] = useState(false);
+
+
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
@@ -87,7 +91,7 @@ export default function RestaurantSignup() {
     
     <div className="bg-gradient-to-r from-blue-300 to-pink-300 flex items-center justify-center min-h-screen">
       <div className="bg-blue-600/20 p-6 rounded-2xl w-full max-w-md">
-        <h2 className="text-xl font-bold mb-4 flex items-center justify-center">Restaurant Signup</h2>
+        <h2 className="text-xl font-bold mb-4 flex items-center justify-center">Start Business/ Sign up</h2>
 
         <form onSubmit={handleSubmit} className="space-y-4 ">
           <input
@@ -96,7 +100,7 @@ export default function RestaurantSignup() {
             placeholder="Restaurant Name"
             value={formData.restaurant_name}
             onChange={handleChange}
-            className="w-full border-2 p-2 rounded"
+            className="w-full border p-2 rounded"
           />
 
           <input
@@ -105,17 +109,24 @@ export default function RestaurantSignup() {
             placeholder="Email"
             value={formData.email}
             onChange={handleChange}
-            className="w-full border-2 p-2 rounded"
+            className="w-full border p-2 rounded"
           />
 
-          <input
-            type="password"
-            name="password"
-            placeholder="Password"
-            value={formData.password}
-            onChange={handleChange}
-            className="w-full border-2 p-2 rounded"
-          />
+          <div className="relative w-full">
+            <input
+                type={showPassword ? "text" : "password"} // toggle type
+                name="password"
+                placeholder="Password"
+                value={formData.password}
+                onChange={handleChange}
+                className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
+            />
+            {/* Eye icon button */}
+            <button
+                type="button" onClick={() => setShowPassword(!showPassword)} className="absolute right-2 top-1/2 transform -translate-y-1/2 text-gray-500">
+                {showPassword ? "🔒" : "👁️"}
+            </button>
+        </div>
 
           <input
             type="text"
@@ -123,7 +134,7 @@ export default function RestaurantSignup() {
             placeholder="Phone"
             value={formData.phone}
             onChange={handleChange}
-            className="w-full border-2 p-2 rounded"
+            className="w-full border p-2 rounded"
           />
 
           <input
@@ -132,7 +143,7 @@ export default function RestaurantSignup() {
             placeholder="Address"
             value={formData.address}
             onChange={handleChange}
-            className="w-full border-2 p-2 rounded"
+            className="w-full border p-2 rounded"
           />
 
           <input
@@ -141,13 +152,11 @@ export default function RestaurantSignup() {
             placeholder="City"
             value={formData.city}
             onChange={handleChange}
-            className="w-full border-2 p-2 rounded"
+            className="w-full border p-2 rounded"
           />
 
           <button
-            type="submit"
-            className=" mx-auto block border-2 border-black  bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700"
-          >
+            type="submit" className="w-full bg-green-600 text-white py-2 rounded-lg hover:bg-green-700 transition">
             Register
           </button>
         </form>
@@ -155,7 +164,7 @@ export default function RestaurantSignup() {
         <div className="mt-6 text-center space-y-2">
             <p>
               Already have an account{" "}
-              <Link href="/auth/restaurant-login" className="text-white hover:underline">
+              <Link href="/auth/restaurant-login" className="text-green-800 hover:underline">
                 Login
               </Link>
             </p>
