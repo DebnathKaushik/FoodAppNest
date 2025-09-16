@@ -38,7 +38,7 @@ export default function UpdateRestaurant() {
     password: "", // keep empty so user enters new password
   });
 
-  // ✅ Fetch restaurant info and fill form automatically
+  //  Fetch restaurant info and fill form automatically
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -63,12 +63,12 @@ export default function UpdateRestaurant() {
     fetchData();
   }, []);
 
-  // ✅ Handle input change
+  //  Handle input change
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  // ✅ Handle update submit
+  //  Handle update submit
  const handleSubmit = async (e: React.FormEvent) => {
   e.preventDefault();
   try {

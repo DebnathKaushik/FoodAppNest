@@ -10,7 +10,7 @@ export class AuthController{
     // Customer Login
     @Post('login')
     async Customer_login(@Body() body:{email:string,password:string}, @Res({ passthrough: true }) res: Response){
-        // wait here to create jwt in auth.service and then destructure token & user
+        // wait here to create "jwt" in auth.service and then destructure token & user
         const{token,user} =  await this.authservice.Customer_login(body.email,body.password)
         // token store in cookie
         res.cookie("jwt_Customer",token,{
@@ -24,14 +24,13 @@ export class AuthController{
     }
 
     // Customer Dashboard 
-  
     @Get('me')
     @UseGuards(CustomerJwtAuthGuard)
     getMe(@Req() req) {
-        // `req.user` is set by JwtAuthGuard from JWT token
-        const { id, email , name} = req.user;
-        return { id, email, name }; // send this to frontend
+    const { id, email, customer_name, phone, address } = req.user;
+    return { id, email, customer_name, phone, address }; // keys must match frontend
     }
+
 
     // Customer Logout
     @Post("logout")

@@ -27,9 +27,14 @@ export class AuthService{
         if(!pass_check){
              throw new UnauthorizedException('Invalid credentials');
         }
-        const payload = {id:exist_customer.id, email:exist_customer.email, name:exist_customer.customer_name};
+        const payload = {id:exist_customer.id, email:exist_customer.email, customer_name:exist_customer.customer_name,
+            phone:exist_customer.phone,address:exist_customer.address,password:exist_customer.password};
+
         const token =  this.jwtservice.sign(payload)
-        return {token,user:{id:exist_customer.id, email:exist_customer.email, name:exist_customer.customer_name}}
+
+        return {token,user:{id:exist_customer.id, email:exist_customer.email, customer_name:exist_customer.customer_name,
+            phone:exist_customer.phone,address:exist_customer.address,password:exist_customer.password
+        }}
     }
 
     async verify_token(token: string) {
@@ -37,4 +42,20 @@ export class AuthService{
     }
 
 
+    // helper Method for refresh jwt create (update user real time)
+    async generateCustomerJwt(customer: Customer) {
+    const payload = {
+        id: customer.id,
+        customer_name: customer.customer_name,
+        email: customer.email,
+        phone: customer.phone,
+        address: customer.address,
+    };
+    return this.jwtservice.sign(payload, { secret: process.env.MY_SECRET2 });
+    }
+
+
 }
+
+
+
