@@ -1,4 +1,4 @@
-import { ConflictException, Injectable, NotFoundException } from "@nestjs/common";
+import { ConflictException, ForbiddenException, Injectable, NotFoundException } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { Customer } from "./Entities/Customer.entity";
 import { Repository } from "typeorm";
@@ -37,13 +37,21 @@ export class CustomerService{
     }
     
     // Customer Update-------------------------------------
-        async update_Customer(id:number,dto_data:CustomerDTO):Promise<Customer>{
+        async update_Customer(id:number,dto_data:CustomerDTO,customerId:Number):Promise<Customer>{
+
+            //Ownership check
+            if (id !== customerId) {
+                throw new ForbiddenException('You are not allowed to update this customer');
+            }
+
+            // find customer exist or not 
             const customer = await this.customerRepo.findOne({
                 where:{ id }
             })
             if(!customer){
                throw new NotFoundException(`Customer with ID ${id} not found`);
             }
+
             // create again hash otherwise it updated with plain dto password
             const salt =  await bcrypt.genSalt()
             const hashedPassword = await bcrypt.hash(dto_data.password,salt)
@@ -57,14 +65,20 @@ export class CustomerService{
     
         
     // Customer Delete-------------------------------------
-        async delete_Customer(id:number):Promise<any>{
+        async delete_Customer(id:number,customerId:Number):Promise<any>{
+
+            //Ownership check
+             if (id !== customerId) {
+                throw new ForbiddenException('You are not allowed to delete this customer');
+            }
+
+            //// find customer exist or not 
             const customer = await this.customerRepo.findOne({
-            where:{id}
-        })
+                where:{id}
+            })
         if(!customer){
             throw new NotFoundException(`Restaurant with ID ${id} not found`);
         }
-         
             return await this.customerRepo.remove(customer);
         }
 }

@@ -43,11 +43,16 @@ export class RestaurantController{
     // Restaurant Update
     @Patch('update/:id')
     @UseGuards(JwtAuthGuard)
-    update_Restaurant(@Param('id',ParseIntPipe) id:number,
-                       @Body() dto_data:RestaurantDto):any{
+    update_Restaurant(@Param('id', ParseIntPipe) id: number,@Body() dto_data: RestaurantDto,@Request() req): any {
+    const restaurantIdFromToken = req.user.id;
 
-        return this.restaurantService.update_Restaurant(id,dto_data)
+    if (restaurantIdFromToken !== id) {
+        throw new ForbiddenException("You are not allowed to update this restaurant");
     }
+
+    return this.restaurantService.update_Restaurant(id, dto_data);
+    }
+
 
     // Restaurant Delete
     @Delete('delete/:id')
@@ -66,25 +71,28 @@ export class RestaurantController{
 
     // Product Create 
     @Post('create-product')
-    @UsePipes( new ValidationPipe())
+    @UsePipes(new ValidationPipe())
     @UseGuards(JwtAuthGuard)
-    CreateProduct(@Body() dto_data:ProductDto):any{
-        return this.restaurantService.CreateProduct(dto_data)
+    CreateProduct(@Body() dto_data: ProductDto, @Request() req: any) {
+    const restaurantId = req.user.id; // from JWT
+    return this.restaurantService.CreateProduct(dto_data, restaurantId);
     }
 
     // Update spcific Product 
     @Patch('product-update/:id')
     @UseGuards(JwtAuthGuard)
-    update_Product(@Param('id',ParseIntPipe) id:number,@Body() dto_data:ProductDto){
-        return this.restaurantService.update_Product(id,dto_data)
+    update_Product(@Param('id', ParseIntPipe) id: number,@Body() dto_data: ProductDto,@Request() req: any) {
+    const restaurantId = req.user.id; // logged-in restaurant
+    return this.restaurantService.update_Product(id, dto_data, restaurantId);
     }
 
-    // Delete spcific Product 
+    // Delete specific Product
     @Delete('product-delete/:id')
-    @UseGuards(JwtAuthGuard)
-    delete_Product(@Param('id',ParseIntPipe) id:number){
-        return this.restaurantService.delete_Product(id)
+    @UseGuards(JwtAuthGuard)delete_Product(@Param('id', ParseIntPipe) id: number,@Request() req: any) {
+    const restaurantId = req.user.id; // logged-in restaurant
+    return this.restaurantService.delete_Product(id, restaurantId);
     }
+
 } 
 
 

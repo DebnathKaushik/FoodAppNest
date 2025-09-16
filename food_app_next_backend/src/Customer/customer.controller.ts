@@ -1,6 +1,7 @@
-import { Controller,Body, Get, UsePipes, ValidationPipe, Post, Patch, Param, ParseIntPipe, Delete } from "@nestjs/common";
+import { Controller,Body, Get, UsePipes, ValidationPipe, Post, Patch,Request, Param, ParseIntPipe, Delete, UseGuards } from "@nestjs/common";
 import { CustomerService } from "./customer.service";
 import { CustomerDTO } from "./DTOs/customerDTO";
+import { JwtAuthGuard as CustomerJwtAuthGuard} from 'src/Auth/Customer.Auth/jwt.guard';
 
 @Controller("Customer")
 export class CustomerController{
@@ -13,19 +14,22 @@ export class CustomerController{
         return this.customerService.CreateCustomer(dto_data)
     }
 
-    // update customer
+    // Update Customer
     @Patch('update/:id')
-    update_Customer(@Param('id',ParseIntPipe) id:number,
-                        @Body() dto_data:CustomerDTO):any{
-
-        return this.customerService.update_Customer(id,dto_data)
+    @UseGuards(CustomerJwtAuthGuard)
+    update_Customer(@Param('id', ParseIntPipe) id: number,@Body() dto_data: CustomerDTO,@Request() req: any) {
+    const customerId = req.user.id; // from JWT
+        return this.customerService.update_Customer(id, dto_data, customerId);
     }
 
-    // update customer
+    // Delete Customer
     @Delete('delete/:id')
-    delete_Customer(@Param('id',ParseIntPipe) id:number){
-        return this.customerService.delete_Customer(id)
+    @UseGuards(CustomerJwtAuthGuard)
+    delete_Customer(@Param('id', ParseIntPipe) id: number, @Request() req: any) {
+    const customerId = req.user.id; // from JWT
+        return this.customerService.delete_Customer(id, customerId);
     }
+
     
 
 }

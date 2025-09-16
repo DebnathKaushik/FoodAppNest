@@ -14,7 +14,7 @@ export class OrderController {
   @UsePipes(new ValidationPipe())
   @UseGuards(CustomerJwtAuthGuard)
   createOrder(@Request() req, @Body() dto: CreateOrderDto) {
-    const customerId = req.user.id; // from JWT
+    const customerId = req.user.id; // from JWT token
     return this.orderService.createOrder(customerId, dto);
   }
 
