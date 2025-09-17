@@ -24,7 +24,7 @@ const router = useRouter()
           </button>
         </li>
         <li>
-          <button className="w-full text-left hover:text-gray-300 transition-colors">
+          <button onClick={()=>router.push("restaurant/ManageOrders")} className="w-full text-left hover:text-gray-300 transition-colors">
             Manage Orders
           </button>
         </li>

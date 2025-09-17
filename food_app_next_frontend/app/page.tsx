@@ -4,7 +4,6 @@ import Image from "next/image";
 export default function Home() {
   return (
     <div className="bg-gradient-to-r from-blue-300 to-green-400 min-h-screen flex flex-col">
-
       {/* Navbar */}
       <nav className="w-full bg-blue-600 text-white flex items-center justify-between px-6 py-3 shadow-md">
         {/* Left: Logo */}
@@ -18,6 +17,16 @@ export default function Home() {
           />
           <span className="font-bold text-xl text-yellow-400">FoodApp</span>
         </Link>
+
+        {/* Right: Nav Links */}
+        <div className="flex space-x-6">
+          <Link href="/about" className="hover:text-yellow-300">
+            About
+          </Link>
+          <Link href="/contact" className="hover:text-yellow-300">
+            Contact
+          </Link>
+        </div>
       </nav>
 
       {/* Main Content */}
@@ -38,7 +47,7 @@ export default function Home() {
 
           {/* Middle image (bigger) */}
           <Image
-            src="/food-image-2.jpg"  
+            src="/food-image-2.jpg"
             alt="food image 2"
             width={600}
             height={200}
@@ -47,7 +56,7 @@ export default function Home() {
 
           {/* Right image */}
           <Image
-            src="/food-image-3.jpg"  
+            src="/food-image-3.jpg"
             alt="food image 3"
             width={400}
             height={300}

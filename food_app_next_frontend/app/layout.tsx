@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
-
+import LoginNotifications from "@/components/notification/page";
 
 
 const geistSans = Geist({
@@ -16,7 +16,7 @@ const geistMono = Geist_Mono({
 
 export const metadata: Metadata = {
   title: "Food App",
-  description: "Eat Healthy Stay Healthy"
+  description: "Eat Healthy Stay Healthy",
 };
 
 export default function RootLayout({
@@ -27,9 +27,11 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
-        
+        {/* Login notification component */}
+        <LoginNotifications />
+
+        {/* Main app content */}
         {children}
-             
       </body>
     </html>
   );

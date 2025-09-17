@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import CustomerNavbar from "@/components/customer/customerNavbar";
 import CustomerSidebar from "@/components/customer/customerSidebar";
 
+
 interface Restaurant {
   id: number;
   restaurant_name: string;
