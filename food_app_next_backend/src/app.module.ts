@@ -10,6 +10,7 @@ import { OrderModule } from './Order/order.module';
 import { CustomerAuthModule } from './Auth/Customer.Auth/auth.module';
 
 import * as dotenv from 'dotenv';
+import { PusherModule } from './pusher/pusher.module';
 
 dotenv.config();
 
@@ -17,6 +18,7 @@ dotenv.config();
 
 @Module({
   imports: [CustomerModule,RestaurantModule,ProductModule,OrderModule,RestaurantAuthModule,CustomerAuthModule,
+    PusherModule,
     TypeOrmModule.forRoot(
     {
       type:'postgres',

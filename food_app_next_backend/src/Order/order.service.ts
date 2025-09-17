@@ -125,7 +125,8 @@ export class OrderService {
 }
 
 
-// Restaurant update status
+
+// Restaurant can update status--------------------------------
 
 async updateStatus(order_id:number,status:OrderStatus,restaurant_id:number):Promise<any>{
   const exist_order = await this.orderRepo.findOne({
@@ -152,26 +153,58 @@ async updateStatus(order_id:number,status:OrderStatus,restaurant_id:number):Prom
 
 
 
+// Get all orders of logged-in customer -----------------------
+async getOrdersByCustomer(customerId: number) {
+
+  const orders = await this.orderRepo.find({
+    where: { customer: { id: customerId } },
+    relations: ['orderDetails', 'orderDetails.product', 'restaurant'],
+    order: { createdAt: 'DESC' },
+  });
+
+  return orders.map(order => {
+    const { password, ...customer } = order.customer;
+    return {
+      id: order.id,
+      status: order.status,
+      totalPrice: order.totalPrice,
+      createdAt: order.createdAt,
+      customer,
+      restaurant: order.restaurant
+        ? {
+            id: order.restaurant.id,
+            restaurant_name: order.restaurant.restaurant_name,
+            email: order.restaurant.email,
+            phone: order.restaurant.phone,
+            address: order.restaurant.address,
+          }
+        : null,
+      orderDetails: order.orderDetails.map(od => ({
+        id: od.id,
+        quantity: od.quantity,
+        price: od.price,
+        product: {
+          id: od.product.id,
+          product_name: od.product.product_name,
+          price: od.product.price,
+          description: od.product.description,
+        },
+      })),
+    };
+  });
+}
+
+// Get all orders That Specific Restaurent--------------------------
+async getOrdersByRestaurant(restaurantId: number) {
+  return this.orderRepo.find({
+    where: { restaurant: { id: restaurantId } },
+    relations: ['orderDetails', 'orderDetails.product', 'customer'],
+    order: { createdAt: 'DESC' },
+  });
+}
 
 
 
-
-
-//   async getOrdersByCustomer(customerId: number) {
-//     return this.orderRepo.find({
-//       where: { customer: { id: customerId } },
-//       relations: ['orderDetails', 'orderDetails.product'],
-//     });
-//   }
-
-//   async getOrderById(orderId: number) {
-//     const order = await this.orderRepo.findOne({
-//       where: { id: orderId },
-//       relations: ['orderDetails', 'orderDetails.product'],
-//     });
-//     if (!order) throw new NotFoundException('Order not found');
-//     return order;
-//   }
 
 
 }

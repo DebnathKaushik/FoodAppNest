@@ -6,6 +6,7 @@ import { AuthService } from './auth.service';
 import { AuthController } from './auth.controller';
 import * as dotenv from 'dotenv';
 import { Customer } from 'src/Customer/Entities/Customer.entity';
+import { PusherModule } from 'src/pusher/pusher.module';
 dotenv.config();
 
 @Module({
@@ -15,6 +16,7 @@ dotenv.config();
       secret: process.env.MY_SECRET2,  
       signOptions: { expiresIn: '2h' },
     }),
+    PusherModule,
   ],
   providers: [AuthService],
   controllers: [AuthController],

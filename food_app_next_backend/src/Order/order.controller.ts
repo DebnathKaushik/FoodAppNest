@@ -9,6 +9,26 @@ import { JwtAuthGuard as RestaurantJwtAuthGuard} from 'src/Auth/Restaurant.Auth/
 export class OrderController {
   constructor(private readonly orderService: OrderService) {}
 
+ 
+  // Get all orders of logged-in customer
+  @Get('customer')  
+  @UseGuards(CustomerJwtAuthGuard)
+  getCustomerOrders(@Request() req) {
+    const customerId = req.user.id; // from JWT token
+    return this.orderService.getOrdersByCustomer(customerId);
+  }
+
+  // Get all orders That Specific Restaurent
+  @Get('restaurant')
+  @UseGuards(RestaurantJwtAuthGuard)
+  getRestaurantOrders(@Request() req) {
+    const restaurantId = req.user.id;
+    return this.orderService.getOrdersByRestaurant(restaurantId);
+  }
+
+
+
+
   // Customer Create Order
   @Post("create")
   @UsePipes(new ValidationPipe())
@@ -26,20 +46,7 @@ export class OrderController {
     return this.orderService.updateStatus(order_id,status,restaurant_id);
   }
 
+  
 
 
-
-
-//   @UseGuards(JwtAuthGuard)
-//   @Get()
-//   getMyOrders(@Request() req) {
-//     const customerId = req.user.id;
-//     return this.orderService.getOrdersByCustomer(customerId);
-//   }
-
-//   @UseGuards(JwtAuthGuard)
-//   @Get(':id')
-//   getOrderById(@Param('id') id: number) {
-//     return this.orderService.getOrderById(id);
-//   }
 }
