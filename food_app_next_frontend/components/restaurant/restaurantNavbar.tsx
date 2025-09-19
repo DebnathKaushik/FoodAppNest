@@ -27,8 +27,8 @@ export default function RestaurantNavbar({
       </button>
 
       {/* Center-left - Restaurant info */}
-      <div className="flex flex-col text-left">
-        <h1 className="text-2xl font-bold">{restaurantName}</h1>
+      <div className="flex flex-col text-left -ml-190">
+        <h1 className="text-2xl font-bold ">{restaurantName}</h1>
         {(restaurantAddress || restaurantCity) && (
           <p className="text-sm text-gray-300">
             {restaurantAddress ? restaurantAddress : ""}{" "}

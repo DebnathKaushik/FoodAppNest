@@ -4,6 +4,7 @@ import "./globals.css";
 import LoginNotifications from "@/components/notification/page";
 
 
+
 const geistSans = Geist({
   variable: "--font-geist-sans",
   subsets: ["latin"],
@@ -27,8 +28,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
-        {/* Login notification component */}
-        <LoginNotifications />
+        <LoginNotifications/>
 
         {/* Main app content */}
         {children}

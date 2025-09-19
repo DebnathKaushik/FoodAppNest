@@ -15,7 +15,7 @@ export class AuthService{
     private jwtservice: JwtService,
 ){}
 
-// Restaurant Login
+// Customer Login
     async Customer_login(email:string,password:string){
         const exist_customer = await this.CustomerRepo.findOne({
             where:{email}
@@ -28,12 +28,12 @@ export class AuthService{
              throw new UnauthorizedException('Invalid credentials');
         }
         const payload = {id:exist_customer.id, email:exist_customer.email, customer_name:exist_customer.customer_name,
-            phone:exist_customer.phone,address:exist_customer.address,password:exist_customer.password};
+            phone:exist_customer.phone,address:exist_customer.address,};
 
         const token =  this.jwtservice.sign(payload)
 
         return {token,user:{id:exist_customer.id, email:exist_customer.email, customer_name:exist_customer.customer_name,
-            phone:exist_customer.phone,address:exist_customer.address,password:exist_customer.password
+            phone:exist_customer.phone,address:exist_customer.address,
         }}
     }
 

@@ -24,7 +24,9 @@ export class PusherService {
     });
   }
 
+  // For trigger  function 
   trigger(channel: string, event: string, data: any) {
     return this.pusher.trigger(channel, event, data);
   }
 }
+  

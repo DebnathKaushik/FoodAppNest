@@ -6,11 +6,12 @@ import { Restaurant } from 'src/Restaurants/Entities/Restaurant.entity';
 import { AuthService } from './auth.service';
 import { AuthController } from './auth.controller';
 import * as dotenv from 'dotenv';
+import { PusherModule } from 'src/pusher/pusher.module';
 dotenv.config();
 
 @Module({
   imports: [
-    TypeOrmModule.forFeature([Restaurant]),
+    TypeOrmModule.forFeature([Restaurant]),PusherModule,
     JwtModule.register({
       secret: process.env.MY_SECRET,  
       signOptions: { expiresIn: '2h' },

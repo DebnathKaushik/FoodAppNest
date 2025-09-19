@@ -2,11 +2,15 @@ import { Body, Controller, Get, Post, Req, Res, UseGuards } from "@nestjs/common
 import { AuthService } from "./auth.service";
 import { Response } from "express";
 import { JwtAuthGuard } from "src/Auth/Restaurant.Auth/jwt.guard";
+import { PusherService } from "src/pusher/pusher.service";
 
 @Controller('Restaurant/auth')
 export class AuthController{
 
-    constructor( private readonly authservice:AuthService){}
+
+    constructor( private readonly authservice:AuthService,
+         private readonly pusherService: PusherService
+    ){}
 
 // Restaurant Login
     @Post('login')
@@ -19,6 +23,11 @@ export class AuthController{
             secure: false,
             maxAge: 24 * 60 * 60 * 1000,
         });
+
+        await this.pusherService.trigger('notification', 'user-logged-in', {
+          message: `${user.name} just logged in!`,
+        });
+
 
         return {message:"Login Succesfull",user}
     }

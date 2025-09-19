@@ -28,13 +28,11 @@ export class AuthController {
         maxAge: 24 * 60 * 60 * 1000, // 1 day
         });
 
-        // trigger real-time login notification via Pusher
-        // Chennel name : notifications
-        // event name : user-logged-in
-        await this.pusherService.trigger('notifications', 'user-logged-in', {
-        message: `${user.customer_name} just logged in!`,
-       
+         // Trigger Pusher event
+        await this.pusherService.trigger('notification', 'user-logged-in', {
+          message: `${user.customer_name} just logged in!`,
         });
+
 
         return { message: "Login Successful", user };
     }
@@ -43,7 +41,7 @@ export class AuthController {
     // Customer Dashboard 
     @Get('me')
     @UseGuards(CustomerJwtAuthGuard)
-    getMe(@Req() req) {
+    async getMe(@Req() req) {
     const { id, email, customer_name, phone, address } = req.user;
     return { id, email, customer_name, phone, address }; // keys must match frontend
     }
