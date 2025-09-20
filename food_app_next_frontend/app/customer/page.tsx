@@ -86,7 +86,7 @@ export default function CustomerDashboard() {
                 >
                   <div className="h-48 w-full rounded-2xl overflow-hidden mb-4 border border-white/10">
                     <img
-                      src={rest.image || "/logo k.jpg"}
+                      src={rest.image || "/food.jpg"}
                       alt={rest.restaurant_name}
                       className="w-full h-full object-cover transition-transform duration-500 hover:scale-110"
                     />
