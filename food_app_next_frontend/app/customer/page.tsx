@@ -49,7 +49,7 @@ export default function CustomerDashboard() {
       } catch (err) {
         console.error(err);
       } finally {
-        setLoading(false);
+        setLoading(false); //stop loading when all Restuarents comes in UI (frontend)
       }
     };
     fetchRestaurants();
@@ -73,10 +73,14 @@ export default function CustomerDashboard() {
         <CustomerSidebar isOpen={sidebarOpen} closeSidebar={() => setSidebarOpen(false)} />
 
         <main className="p-6">
-          <h1 className="text-2xl mb-2">All Restaurants</h1>
+          <h1 className="text-2xl mb-2 border-2 inline-block bg-gray-400 p-2">All Restaurants</h1>
 
+          {/* here is Loader (size) and Spin machanism*/ }
           {loading ? (
-            <p className="text-gray-200 text-lg animate-pulse">Loading restaurants...</p>
+            <div className="flex justify-center items-center h-50"> 
+                <div className="w-16 h-16 border-8 border-white/20 border-t-white/80 rounded-full animate-spin"></div>
+                <p className="text-white mt-4">Loading...</p>
+            </div>
           ) : (
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
               {restaurants.map((rest) => (

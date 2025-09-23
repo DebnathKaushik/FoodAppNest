@@ -52,9 +52,7 @@ export default function CustomerOrdersPage() {
         setCustomerName(res.data.customer_name);
       } catch {
         router.push("/auth/customer-login");
-      }finally {
-        setLoading(false); // stop loading
-    }
+      }
     };
 
     
@@ -66,6 +64,8 @@ export default function CustomerOrdersPage() {
         setOrders(res.data);
     } catch (err) {
         console.error(err);
+    }finally {
+        setLoading(false); // stop loading when all orders comes in UI (frontend)
     }
     };
 
@@ -76,13 +76,18 @@ export default function CustomerOrdersPage() {
 
   if (loading)
     return (
-      <div className="flex items-center justify-center min-h-screen bg-gradient-to-br from-blue-900 via-blue-800 to-gray-900">
-        <p className="text-gray-200 text-lg animate-pulse">Loading orders...</p>
+      <div className="flex justify-center items-center min-h-screen bg-gradient-to-br from-blue-900 via-blue-800 to-gray-900">
+        {/* i need to Wrap my loader in the same background container 
+        min-h-screen bg-gradient-to-br from-blue-900 via-blue-800 to-gray-900 */}
+          <div className="w-16 h-16 border-8 border-white/20 border-t-white/80 rounded-full animate-spin"></div>
+          <p className="text-white mt-4">Loading...</p>
       </div>
     );
 
   return (
+
     <div className="min-h-screen bg-gradient-to-br from-blue-900 via-blue-800 to-gray-900">
+
       <CustomerNavbar
         customerName={customerName}
         onLogout={() => router.push("/auth/customer-login")}

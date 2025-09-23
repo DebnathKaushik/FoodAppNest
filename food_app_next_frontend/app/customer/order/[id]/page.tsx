@@ -35,6 +35,7 @@ export default function RestaurantMenuPage() {
 
 
   useEffect(() => {
+
     const fetchCustomer = async () => {
       try {
         const res = await axios.get("http://localhost:7000/Customer/auth/me", {
@@ -53,7 +54,7 @@ export default function RestaurantMenuPage() {
       } catch (err) {
         console.error("Error fetching restaurant products:", err);
       } finally {
-        setLoading(false);
+        setLoading(false); // stop loading when Restuarent -> (orders) comes in UI (frontend)
       }
     };
 
@@ -98,6 +99,9 @@ export default function RestaurantMenuPage() {
   if (loading) {
     return (
       <div className="flex items-center justify-center min-h-screen bg-gradient-to-br from-blue-900 via-blue-800 to-gray-900">
+        {/* i need to Wrap my loader in the same background container 
+        min-h-screen bg-gradient-to-br from-blue-900 via-blue-800 to-gray-900 */}
+        <div className="h-16 w-16 border-8 border-white/20 border-t-white/80 rounded-full animate-spin "></div>
         <p className="text-lg text-gray-200 animate-pulse">Loading menu...</p>
       </div>
     );
@@ -106,7 +110,8 @@ export default function RestaurantMenuPage() {
   if (!restaurant) {
     return (
       <div className="flex items-center justify-center min-h-screen bg-gradient-to-br from-blue-900 via-blue-800 to-gray-900">
-        <p className="text-lg text-red-400">Restaurant not found.</p>
+        <div className="h-16 w-16 border-8 border-yellow-400 animate-spin ">404</div>
+        <p className="text-lg text-red-400 ml-10">Restaurant not found.</p>
       </div>
     );
   }
@@ -121,8 +126,6 @@ export default function RestaurantMenuPage() {
         isOpen={sidebarOpen}
         closeSidebar={() => setSidebarOpen(false)}
       />
-
-
 
       <main className="p-6">
 
