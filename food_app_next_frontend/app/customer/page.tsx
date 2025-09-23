@@ -73,7 +73,7 @@ export default function CustomerDashboard() {
         <CustomerSidebar isOpen={sidebarOpen} closeSidebar={() => setSidebarOpen(false)} />
 
         <main className="p-6">
-          <h1 className="text-2xl mb-2 border-2 inline-block bg-gray-400 p-2">All Restaurants</h1>
+          <h1 className="text-2xl mb-2 border-2 inline-block bg-gray-400 p-4 rounded-full">All Restaurants</h1>
 
           {/* here is Loader (size) and Spin machanism*/ }
           {loading ? (
