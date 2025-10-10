@@ -102,7 +102,7 @@ export default function RestaurantMenuPage() {
         {/* i need to Wrap my loader in the same background container 
         min-h-screen bg-gradient-to-br from-blue-900 via-blue-800 to-gray-900 */}
         <div className="h-16 w-16 border-8 border-white/20 border-t-white/80 rounded-full animate-spin "></div>
-        <p className="text-lg text-gray-200 animate-pulse">Loading menu...</p>
+        <p className="text-lg text-gray-200 animate-pulse">Loading Menu...</p>
       </div>
     );
   }
